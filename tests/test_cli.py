@@ -1,6 +1,6 @@
 """Test the CLI."""
 
-from jedi_language_server.cli import cli, get_version
+from mm_language_server.cli import cli, get_version
 
 
 def test_get_version() -> None:

@@ -2,6 +2,6 @@
 
 import sys
 
-from jedi_language_server.cli import cli
+from mm_language_server.cli import cli
 
 sys.exit(cli())

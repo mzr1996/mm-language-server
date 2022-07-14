@@ -1,10 +1,10 @@
-# jedi-language-server
+# mm-language-server
 
-[![image-version](https://img.shields.io/pypi/v/jedi-language-server.svg)](https://python.org/pypi/jedi-language-server)
-[![image-license](https://img.shields.io/pypi/l/jedi-language-server.svg)](https://python.org/pypi/jedi-language-server)
-[![image-python-versions](https://img.shields.io/badge/python->=3.7-blue)](https://python.org/pypi/jedi-language-server)
-[![image-pypi-downloads](https://pepy.tech/badge/jedi-language-server)](https://pepy.tech/project/jedi-language-server)
-[![github-action-testing](https://github.com/pappasam/jedi-language-server/actions/workflows/testing.yaml/badge.svg)](https://github.com/pappasam/jedi-language-server/actions/workflows/testing.yaml)
+[![image-version](https://img.shields.io/pypi/v/mm-language-server.svg)](https://python.org/pypi/mm-language-server)
+[![image-license](https://img.shields.io/pypi/l/mm-language-server.svg)](https://python.org/pypi/mm-language-server)
+[![image-python-versions](https://img.shields.io/badge/python->=3.7-blue)](https://python.org/pypi/mm-language-server)
+[![image-pypi-downloads](https://pepy.tech/badge/mm-language-server)](https://pepy.tech/project/mm-language-server)
+[![github-action-testing](https://github.com/pappasam/mm-language-server/actions/workflows/testing.yaml/badge.svg)](https://github.com/pappasam/mm-language-server/actions/workflows/testing.yaml)
 
 A [Language Server](https://microsoft.github.io/language-server-protocol/) for the latest version(s) of [Jedi](https://jedi.readthedocs.io/en/latest/). If using Neovim/Vim, we recommend using with [coc-jedi](https://github.com/pappasam/coc-jedi). Supports Python versions 3.7 and newer.
 
@@ -12,17 +12,17 @@ A [Language Server](https://microsoft.github.io/language-server-protocol/) for t
 
 ## Installation
 
-Some frameworks, like coc-jedi and vscode-python, will install and manage jedi-language-server for you. If you're setting up manually, you can run the following from your command line (bash / zsh):
+Some frameworks, like coc-jedi and vscode-python, will install and manage mm-language-server for you. If you're setting up manually, you can run the following from your command line (bash / zsh):
 
 ```bash
-pip install -U jedi-language-server
+pip install -U mm-language-server
 ```
 
-Alternatively (and preferably), use [pipx](https://github.com/pipxproject/pipx) to keep jedi-language-server and its dependencies isolated from your other Python dependencies. Don't worry, jedi is smart enough to figure out which Virtual environment you're currently using!
+Alternatively (and preferably), use [pipx](https://github.com/pipxproject/pipx) to keep mm-language-server and its dependencies isolated from your other Python dependencies. Don't worry, jedi is smart enough to figure out which Virtual environment you're currently using!
 
 ## Capabilities
 
-jedi-language-server aims to support Jedi's capabilities and expose them through the Language Server Protocol. It supports the following Language Server capabilities:
+mm-language-server aims to support Jedi's capabilities and expose them through the Language Server Protocol. It supports the following Language Server capabilities:
 
 ### Language Features
 
@@ -47,7 +47,7 @@ jedi-language-server aims to support Jedi's capabilities and expose them through
 
 ## Editor Setup
 
-The following instructions show how to use jedi-language-server with your development tooling. The instructions assume you have already installed jedi-language-server.
+The following instructions show how to use mm-language-server with your development tooling. The instructions assume you have already installed mm-language-server.
 
 ### Vim / Neovim
 
@@ -69,26 +69,26 @@ Users may choose one of the following options:
 
 For `eglot` add the following to your emacs config:
 ```
-(add-to-list 'eglot-server-programs '(python-mode . ("jedi-language-server")))
+(add-to-list 'eglot-server-programs '(python-mode . ("mm-language-server")))
 ```
 
 Note: this list is non-exhaustive. If you know of a great choice not included in this list, please submit a PR!
 
 ### Visual Studio Code (vscode)
 
-Starting from the [October 2021 release](https://github.com/microsoft/vscode-python/releases/tag/2021.10.1317843341), set the `python.languageServer` setting to `Jedi` to use jedi-language-server.
+Starting from the [October 2021 release](https://github.com/microsoft/vscode-python/releases/tag/2021.10.1317843341), set the `python.languageServer` setting to `Jedi` to use mm-language-server.
 
 Note: This does not support Python 2.7.
 
-See: <https://github.com/pappasam/jedi-language-server/issues/50#issuecomment-781101169>
+See: <https://github.com/pappasam/mm-language-server/issues/50#issuecomment-781101169>
 
 ## Command line
 
-jedi-language-server can be run directly from the command line.
+mm-language-server can be run directly from the command line.
 
 ```console
-$ jedi-language-server --help
-usage: jedi-language-server [-h] [--version] [--tcp] [--ws] [--host HOST] [--port PORT] [--log-file LOG_FILE] [-v]
+$ mm-language-server --help
+usage: mm-language-server [-h] [--version] [--tcp] [--ws] [--host HOST] [--port PORT] [--log-file LOG_FILE] [-v]
 
 Jedi language server: an LSP wrapper for jedi.
 
@@ -104,12 +104,12 @@ optional arguments:
 
 Examples:
 
-    Run over stdio     : jedi-language-server
-    Run over tcp       : jedi-language-server --tcp
+    Run over stdio     : mm-language-server
+    Run over tcp       : mm-language-server --tcp
     Run over websockets:
         # only need to pip install once per env
         pip install pygls[ws]
-        jedi-language-server --ws
+        mm-language-server --ws
 
 Notes:
 
@@ -121,7 +121,7 @@ Notes:
 If testing sending requests over stdio manually from the command line, you must include Windows-style line endings: `\r\n` . For an example, from within this project, run the following:
 
 ```console
-$ jedi-language-server < ./example-initialization-request.txt
+$ mm-language-server < ./example-initialization-request.txt
 INFO:pygls.server:Starting IO server
 INFO:pygls.feature_manager:Registered "textDocument/didOpen" with options "None"
 INFO:pygls.feature_manager:Registered "textDocument/didChange" with options "None"
@@ -139,7 +139,7 @@ INFO:pygls.server:Closing the event loop.
 If testing interactively, be sure to manually insert carriage returns. Although this may differ between shell environments, within most bash terminals, you can explicitly insert the required line endings by typing `<C-v><C-m>`, which will insert a `^M`. See:
 
 ```console
-$ jedi-language-server 2>logs
+$ mm-language-server 2>logs
 Content-Length: 1062^M
 ^M
 {"jsonrpc":"2.0","id":0,"method":"initialize","params":{"capabilities":{"textDocument":{"hover":{"dynamicRegistration":true,"contentFormat":["plaintext","markdown"]},"synchronization":{"dynamicRegistration":true,"willSave":false,"didSave":false,"willSaveWaitUntil":false},"completion":{"dynamicRegistration":true,"completionItem":{"snippetSupport":false,"commitCharactersSupport":true,"documentationFormat":["plaintext","markdown"],"deprecatedSupport":false,"preselectSupport":false},"contextSupport":false},"signatureHelp":{"dynamicRegistration":true,"signatureInformation":{"documentationFormat":["plaintext","markdown"]}},"declaration":{"dynamicRegistration":true,"linkSupport":true},"definition":{"dynamicRegistration":true,"linkSupport":true},"typeDefinition":{"dynamicRegistration":true,"linkSupport":true},"implementation":{"dynamicRegistration":true,"linkSupport":true}},"workspace":{"didChangeConfiguration":{"dynamicRegistration":true}}},"initializationOptions":null,"processId":null,"rootUri":"file:///home/ubuntu/artifacts/","workspaceFolders":null}}^M
@@ -153,7 +153,7 @@ Content-Type: application/vscode-jsonrpc; charset=utf-8
 
 We recommend using [coc-jedi](https://github.com/pappasam/coc-jedi) and following its [configuration instructions](https://github.com/pappasam/coc-jedi#configuration).
 
-If you are configuring manually, jedi-language-server supports the following [initializationOptions](https://microsoft.github.io/language-server-protocol/specification#initialize):
+If you are configuring manually, mm-language-server supports the following [initializationOptions](https://microsoft.github.io/language-server-protocol/specification#initialize):
 
 ```json
 {
@@ -208,7 +208,7 @@ See coc-jedi's [configuration instructions](https://github.com/pappasam/coc-jedi
 
 ## Additional Diagnostics
 
-jedi-langugage-server provides diagnostics about syntax errors, powered by Jedi. If you would like additional diagnostics, we suggest using the powerful [diagnostic-language-server](https://github.com/iamcco/diagnostic-languageserver).
+mm-langugage-server provides diagnostics about syntax errors, powered by Jedi. If you would like additional diagnostics, we suggest using the powerful [diagnostic-language-server](https://github.com/iamcco/diagnostic-languageserver).
 
 ## Code Formatting
 
@@ -234,8 +234,8 @@ Install the following tools manually:
 [Fork](https://help.github.com/en/github/getting-started-with-github/fork-a-repo) this repository and clone the fork to your development machine:
 
 ```bash
-git clone https://github.com/<YOUR-USERNAME>/jedi-language-server
-cd jedi-language-server
+git clone https://github.com/<YOUR-USERNAME>/mm-language-server
+cd mm-language-server
 ```
 
 ### Set up development environment
@@ -252,9 +252,9 @@ make test
 
 ## Inspiration
 
-Palantir's [python-language-server](https://github.com/palantir/python-language-server) inspired this project. In fact, for consistency's sake, many of python-language-server's CLI options are used as-is in jedi-language-server.
+Palantir's [python-language-server](https://github.com/palantir/python-language-server) inspired this project. In fact, for consistency's sake, many of python-language-server's CLI options are used as-is in mm-language-server.
 
-Unlike python-language-server, jedi-language-server:
+Unlike python-language-server, mm-language-server:
 
 - Uses [pygls](https://github.com/openlawlibrary/pygls) instead of creating its own low-level Language Server Protocol bindings
 - Supports one powerful 3rd party static analysis / completion / refactoring library: Jedi. By only supporting Jedi, we can focus on supporting all Jedi features without exposing ourselves to too many broken 3rd party dependencies (I'm looking at you, [rope](https://github.com/python-rope/rope)).

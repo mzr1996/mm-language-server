@@ -10,13 +10,13 @@ profile = "black"
 line_length = 79
 
 [tool.poetry]
-name = "jedi-language-server"
+name = "mm-language-server"
 version = "0.36.1"
-description = "A language server for Jedi!"
+description = "A language server for OpenMMLab configs!"
 authors = ["Sam Roeca <samuel.roeca@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/pappasam/jedi-language-server"
-repository = "https://github.com/pappasam/jedi-language-server"
+homepage = "https://github.com/mzr1996/mm-language-server"
+repository = "https://github.com/mzr1996/mm-language-server"
 keywords = [
   "python",
   "completion",
@@ -63,11 +63,11 @@ pytest-cov = ">=3.0.0"
 docformatter = ">=1.4"
 
 [tool.poetry.scripts]
-jedi-language-server = 'jedi_language_server.cli:cli'
+mm-language-server = 'mm_language_server.cli:cli'
 
 [tool.poetry.urls]
-Changelog = "https://github.com/pappasam/jedi-language-server/blob/main/CHANGELOG.md"
-Issues = "https://github.com/pappasam/jedi-language-server/issues"
+Changelog = "https://github.com/mzr1996/mm-language-server/blob/main/CHANGELOG.md"
+Issues = "https://github.com/mzr1996/mm-language-server/issues"
 
 [tool.tox]
 legacy_tox_ini = """
@@ -82,13 +82,13 @@ skip_install = true
 commands =
   poetry install
 
-  !cov: poetry run black --check --diff jedi_language_server tests
-  !cov: poetry run docformatter --check --recursive jedi_language_server tests
-  !cov: poetry run isort --check jedi_language_server tests
+  !cov: poetry run black --check --diff mm_language_server tests
+  !cov: poetry run docformatter --check --recursive mm_language_server tests
+  !cov: poetry run isort --check mm_language_server tests
 
-  !cov: poetry run mypy jedi_language_server
-  !cov: poetry run pylint jedi_language_server tests
+  !cov: poetry run mypy mm_language_server
+  !cov: poetry run pylint mm_language_server tests
   !cov: poetry run pytest tests
 
-  cov: poetry run pytest --cov=jedi_language_server --cov-report=term-missing tests
+  cov: poetry run pytest --cov=mm_language_server --cov-report=term-missing tests
 """

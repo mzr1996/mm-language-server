@@ -28,24 +28,24 @@ def get_version() -> str:
                 file=sys.stderr,
             )
             sys.exit(1)
-    return version("jedi-language-server")
+    return version("mm-language-server")
 
 
 def cli() -> None:
     """Jedi language server cli entrypoint."""
     parser = argparse.ArgumentParser(
-        prog="jedi-language-server",
+        prog="mm-language-server",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description="Jedi language server: an LSP wrapper for jedi.",
         epilog="""\
 Examples:
 
-    Run over stdio     : jedi-language-server
-    Run over tcp       : jedi-language-server --tcp
+    Run over stdio     : mm-language-server
+    Run over tcp       : mm-language-server --tcp
     Run over websockets:
         # only need to pip install once per env
         pip install pygls[ws]
-        jedi-language-server --ws
+        mm-language-server --ws
 
 Notes:
 

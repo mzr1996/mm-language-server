@@ -42,9 +42,9 @@ publish:  setup ## Build & publish the new version
 
 .PHONY: format
 format:  setup ## Autoformat all files in the repo. WARNING: changes files in-place
-	poetry run black jedi_language_server tests
-	poetry run isort jedi_language_server tests
-	poetry run docformatter --recursive --in-place jedi_language_server tests
+	poetry run black mm_language_server tests
+	poetry run isort mm_language_server tests
+	poetry run docformatter --recursive --in-place mm_language_server tests
 
 .PHONY:  clean
 clean: ## Remove local development environment

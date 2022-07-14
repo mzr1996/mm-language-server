@@ -483,10 +483,10 @@ def convert_docstring(docstring: str, markup_kind: MarkupKind) -> str:
             result = (
                 docstring_stripped
                 + "\n"
-                + "jedi-language-server error: "
+                + "mm-language-server error: "
                 + "Uncaught exception while converting docstring to markdown. "
                 + "Please open issue at "
-                + "https://github.com/pappasam/jedi-language-server/issues. "
+                + "https://github.com/mzr1996/mm-language-server/issues. "
                 + f"Traceback:\n{error}"
             ).strip()
             return _md_text(result, markup_kind)

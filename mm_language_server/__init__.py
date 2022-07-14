@@ -1,0 +1,1 @@
+"""OpenMMLab Config Language Server."""
