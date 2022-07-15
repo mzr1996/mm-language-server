@@ -30,6 +30,7 @@ from pygls.lsp.types import (
 )
 from pygls.workspace import Document
 
+from .mm_jedi import MMScript
 from .initialization_options import HoverDisableOptions, InitializationOptions
 from .type_map import get_lsp_completion_type, get_lsp_symbol_type
 
@@ -65,7 +66,7 @@ def set_jedi_settings(  # pylint: disable=invalid-name
 
 def script(project: Optional[Project], document: Document) -> Script:
     """Simplifies getting jedi Script."""
-    return Script(code=document.source, path=document.path, project=project)
+    return MMScript(code=document.source, path=document.path, project=project)
 
 
 def lsp_range(name: Name) -> Optional[Range]:
