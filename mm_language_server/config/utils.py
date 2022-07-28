@@ -2,6 +2,7 @@ import os.path as osp
 import warnings
 from importlib import import_module
 
+
 def check_file_exist(filename, msg_tmpl='file "{}" does not exist'):
     if not osp.isfile(filename):
         raise FileNotFoundError(msg_tmpl.format(filename))
@@ -34,24 +35,25 @@ def import_modules_from_strings(imports, allow_failed_imports=False):
         imports = [imports]
     if not isinstance(imports, list):
         raise TypeError(
-            f'custom_imports must be a list but got type {type(imports)}')
+            f"custom_imports must be a list but got type {type(imports)}"
+        )
     imported = []
     for imp in imports:
         if not isinstance(imp, str):
             raise TypeError(
-                f'{imp} is of type {type(imp)} and cannot be imported.')
+                f"{imp} is of type {type(imp)} and cannot be imported."
+            )
         try:
             imported_tmp = import_module(imp)
         except ImportError:
             if allow_failed_imports:
-                warnings.warn(f'{imp} failed to import and is ignored.',
-                              UserWarning)
+                warnings.warn(
+                    f"{imp} failed to import and is ignored.", UserWarning
+                )
                 imported_tmp = None
             else:
-                raise ImportError(f'Failed to import {imp}')
+                raise ImportError(f"Failed to import {imp}")
         imported.append(imported_tmp)
     if single_import:
         imported = imported[0]
     return imported
-
-

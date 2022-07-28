@@ -4,7 +4,6 @@ This module is a bridge between `jedi.Refactoring` and
 `pygls.types.TextEdit` types
 """
 
-
 import ast
 import difflib
 from bisect import bisect_right
@@ -62,9 +61,7 @@ class RefactoringConverter:
                 kind=ResourceOperationKind.Rename,
                 old_uri=old_name.as_uri(),
                 new_uri=new_name.as_uri(),
-                options=RenameFileOptions(
-                    ignore_if_exists=True, overwrite=True
-                ),
+                options=RenameFileOptions(ignore_if_exists=True, overwrite=True),
             )
 
     def lsp_text_document_edits(self) -> Iterator[TextDocumentEdit]:
@@ -88,9 +85,7 @@ class RefactoringConverter:
 _OPCODES_CHANGE = {"replace", "delete", "insert"}
 
 
-def lsp_text_edits(
-    document: Document, changed_file: ChangedFile
-) -> List[TextEdit]:
+def lsp_text_edits(document: Document, changed_file: ChangedFile) -> List[TextEdit]:
     """Take a jedi `ChangedFile` and convert to list of text edits.
 
     Handles inserts, replaces, and deletions within a text file.
@@ -108,13 +103,11 @@ def lsp_text_edits(
         if opcode.op in _OPCODES_CHANGE:
             start = position_lookup.get(opcode.old_start)
             end = position_lookup.get(opcode.old_end)
-            new_text = new_code[opcode.new_start : opcode.new_end]
-            text_edits.append(
-                TextEdit(
-                    range=Range(start=start, end=end),
-                    new_text=new_text,
-                )
-            )
+            new_text = new_code[opcode.new_start:opcode.new_end]
+            text_edits.append(TextEdit(
+                range=Range(start=start, end=end),
+                new_text=new_text,
+            ))
     return text_edits
 
 

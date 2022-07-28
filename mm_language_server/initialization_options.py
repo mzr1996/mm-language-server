@@ -15,13 +15,11 @@ from pygls.lsp.types import MarkupKind
 
 def snake_to_camel(string: str) -> str:
     """Convert from snake_case to camelCase."""
-    return "".join(
-        word.capitalize() if idx > 0 else word
-        for idx, word in enumerate(string.split("_"))
-    )
+    return "".join(word.capitalize() if idx > 0 else word for idx, word in enumerate(string.split("_")))
 
 
 class Model(BaseModel):
+
     class Config:
         alias_generator = snake_to_camel
 
@@ -58,33 +56,15 @@ class HoverDisable(Model):
     underscore at the end.
     """
 
-    keyword_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="keyword"
-    )
-    module_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="module"
-    )
-    class_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="class"
-    )
-    instance_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="instance"
-    )
-    function_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="function"
-    )
-    param_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="param"
-    )
-    path_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="path"
-    )
-    property_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="property"
-    )
-    statement_: HoverDisableOptions = Field(
-        default=HoverDisableOptions(), alias="statement"
-    )
+    keyword_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="keyword")
+    module_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="module")
+    class_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="class")
+    instance_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="instance")
+    function_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="function")
+    param_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="param")
+    path_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="path")
+    property_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="property")
+    statement_: HoverDisableOptions = Field(default=HoverDisableOptions(), alias="statement")
 
 
 class Hover(Model):
@@ -116,3 +96,4 @@ class InitializationOptions(Model):
     jedi_settings: JediSettings = JediSettings()
     markup_kind_preferred: Optional[MarkupKind]
     workspace: Workspace = Workspace()
+    scope: str = "mmengine"

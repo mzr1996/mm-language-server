@@ -30,8 +30,8 @@ from pygls.lsp.types import (
 )
 from pygls.workspace import Document
 
-from .mm_jedi import MMScript
 from .initialization_options import HoverDisableOptions, InitializationOptions
+from .mm_jedi import MMScript
 from .type_map import get_lsp_completion_type, get_lsp_symbol_type
 
 
@@ -47,26 +47,19 @@ def _jedi_debug_function(
 
 
 def set_jedi_settings(  # pylint: disable=invalid-name
-    initialization_options: InitializationOptions,
-) -> None:
+        initialization_options: InitializationOptions, ) -> None:
     """Sets jedi settings."""
     jedi.settings.auto_import_modules = list(
-        set(
-            jedi.settings.auto_import_modules
-            + initialization_options.jedi_settings.auto_import_modules
-        )
-    )
+        set(jedi.settings.auto_import_modules + initialization_options.jedi_settings.auto_import_modules))
 
-    jedi.settings.case_insensitive_completion = (
-        initialization_options.jedi_settings.case_insensitive_completion
-    )
+    jedi.settings.case_insensitive_completion = (initialization_options.jedi_settings.case_insensitive_completion)
     if initialization_options.jedi_settings.debug:
         jedi.set_debug_function(func_cb=_jedi_debug_function)
 
 
-def script(project: Optional[Project], document: Document) -> Script:
+def script(project: Optional[Project], document: Document, scope=None) -> Script:
     """Simplifies getting jedi Script."""
-    return MMScript(code=document.source, path=document.path, project=project)
+    return MMScript(code=document.source, path=document.path, project=project, scope=scope)
 
 
 def lsp_range(name: Name) -> Optional[Range]:
@@ -115,9 +108,7 @@ def lsp_symbol_information(name: Name) -> Optional[SymbolInformation]:
         name=name.name,
         kind=get_lsp_symbol_type(name.type),
         location=location,
-        container_name=(
-            "None" if name is None else (name.full_name or name.name or "None")
-        ),
+        container_name=("None" if name is None else (name.full_name or name.name or "None")),
     )
 
 
@@ -171,11 +162,7 @@ def lsp_document_symbols(names: List[Name]) -> List[DocumentSymbol]:
             # if they're a class, they can also be a namespace
             _name_lookup[name] = symbol
 
-        if (
-            parent.type == "class"
-            and name.type == "function"
-            and name.name in {"__init__"}
-        ):
+        if (parent.type == "class" and name.type == "function" and name.name in {"__init__"}):
             # special case for __init__ method in class; names defined here
             symbol.kind = SymbolKind.Method
             parent_symbol = _name_lookup[parent]
@@ -185,9 +172,7 @@ def lsp_document_symbols(names: List[Name]) -> List[DocumentSymbol]:
         elif parent not in _name_lookup:
             # unqualified names are not included in the tree
             continue
-        elif name.is_side_effect() and name.get_line_code().strip().startswith(
-            "self."
-        ):
+        elif name.is_side_effect() and name.get_line_code().strip().startswith("self."):
             # handle attribute creation on __init__ method
             symbol.kind = SymbolKind.Property
             parent_symbol = _name_lookup[parent]
@@ -220,9 +205,7 @@ def lsp_diagnostic(error: jedi.api.errors.SyntaxError) -> Diagnostic:
     return Diagnostic(
         range=Range(
             start=Position(line=error.line - 1, character=error.column),
-            end=Position(
-                line=error.until_line - 1, character=error.until_column
-            ),
+            end=Position(line=error.until_line - 1, character=error.until_column),
         ),
         message=error.get_message(),
         severity=DiagnosticSeverity.Error,
@@ -406,9 +389,7 @@ def lsp_completion_item(  # pylint: disable=too-many-arguments
 
     _MOST_RECENT_COMPLETIONS[completion_name] = completion
     if resolve_eagerly:
-        completion_item = lsp_completion_item_resolve(
-            completion_item, markup_kind=markup_kind
-        )
+        completion_item = lsp_completion_item_resolve(completion_item, markup_kind=markup_kind)
 
     if not enable_snippets:
         return completion_item
@@ -441,20 +422,12 @@ def _md_italic(value: str, markup_kind: MarkupKind) -> str:
 
 def _md_text(value: str, markup_kind: MarkupKind) -> str:
     """Surround a markdown string with a Python fence."""
-    return (
-        f"```text\n{value}\n```"
-        if markup_kind == MarkupKind.Markdown
-        else value
-    )
+    return (f"```text\n{value}\n```" if markup_kind == MarkupKind.Markdown else value)
 
 
 def _md_python(value: str, markup_kind: MarkupKind) -> str:
     """Surround a markdown string with a Python fence."""
-    return (
-        f"```python\n{value}\n```"
-        if markup_kind == MarkupKind.Markdown
-        else value
-    )
+    return (f"```python\n{value}\n```" if markup_kind == MarkupKind.Markdown else value)
 
 
 def _md_text_sl(value: str, markup_kind: MarkupKind) -> str:
@@ -481,15 +454,9 @@ def convert_docstring(docstring: str, markup_kind: MarkupKind) -> str:
         except docstring_to_markdown.UnknownFormatError:
             return _md_text(docstring_stripped, markup_kind)
         except Exception as error:  # pylint: disable=broad-except
-            result = (
-                docstring_stripped
-                + "\n"
-                + "mm-language-server error: "
-                + "Uncaught exception while converting docstring to markdown. "
-                + "Please open issue at "
-                + "https://github.com/mzr1996/mm-language-server/issues. "
-                + f"Traceback:\n{error}"
-            ).strip()
+            result = (docstring_stripped + "\n" + "mm-language-server error: " +
+                      "Uncaught exception while converting docstring to markdown. " + "Please open issue at " +
+                      "https://github.com/mzr1996/mm-language-server/issues. " + f"Traceback:\n{error}").strip()
             return _md_text(result, markup_kind)
     return docstring_stripped
 
@@ -542,14 +509,9 @@ def _hover_ignore(name: Name, init: InitializationOptions) -> bool:
     name_str = name.name
     if not name_str:
         return True
-    ignore_type: HoverDisableOptions = getattr(
-        init.hover.disable, name.type + "_"
-    )
-    return (
-        ignore_type.all is True
-        or name_str in ignore_type.names
-        or (name.full_name or name_str) in ignore_type.full_names
-    )
+    ignore_type: HoverDisableOptions = getattr(init.hover.disable, name.type + "_")
+    return (ignore_type.all is True or name_str in ignore_type.names
+            or (name.full_name or name_str) in ignore_type.full_names)
 
 
 def hover_text(
@@ -583,11 +545,7 @@ def hover_text(
     if full_name and name.type != "module":
         if len(result) == 1:
             result.append("---")
-        result.append(
-            _md_bold("Full name:", markup_kind)
-            + " "
-            + _md_text_sl(full_name, markup_kind)
-        )
+        result.append(_md_bold("Full name:", markup_kind) + " " + _md_text_sl(full_name, markup_kind))
     return "\n".join(result).strip()
 
 
